@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id              Int       @id @default(autoincrement())
+  Nama            String
+  password        String
+  profile_picture String?
+  email           String    @unique
+  address         String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+
+  // Define a one-to-many relationship with transactions
+  transactions Transactions[]
+}
+
+// Define the Transaction table
+model Transactions {
+  id               Int      @id @default(autoincrement())
+  user_id          Int
+  amount           Int
+  payment_link     String
+  is_paid          Boolean  @default(false)
+  date_transaction DateTime @default(now())
+
+  // Define a foreign key relationship with the User table
+  user Users @relation(fields: [user_id], references: [id])
+}
