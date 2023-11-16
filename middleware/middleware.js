@@ -11,19 +11,24 @@ function CheckUser(req, res, next) {
 
     const { error } = schema.validate(req.body)
     if (error) {
-        let respons = ResponseTemplate(
-            null,
-            'invalid request',
-            error.details[0].message,
-            400)
-        res.status(400)
-        res.json(respons)
+        let respons = ResponseTemplate(null, 'invalid request', error.details[0].message, 400)
+        res.status(400).json(respons)
         return
     }
-
     next()
 }
 
-module.exports ={
+const isAdmin = (req, res, next) => {
+    const userType = req.headers['user-type'];
+    if (userType === 'admin') {
+      next();
+    } else {
+      res.status(403).json({ success: false, message: 'Access denied. Admin only.' });
+      return
+    }
+  }
+
+module.exports = {
     CheckUser,
+    isAdmin,
 }

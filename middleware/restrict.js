@@ -7,8 +7,8 @@ async function Authenticate(req, res, next) {
     const { authorization } = req.headers
 
     if (!authorization) {
-        let respons = ResponseTemplate(null, 'user unauthorized', null, 401)
-        res.status(401).json(respons)
+        let response = ResponseTemplate(null, 'user unauthorized', null, 401)
+        res.status(401).json(response)
         return
     }
 
@@ -18,8 +18,8 @@ async function Authenticate(req, res, next) {
         next()
 
     } catch (error) {
-        let respons = ResponseTemplate(null, 'user unauthorized', error, 400)
-        res.status(400).json(respons)
+        let response = ResponseTemplate(null, 'user unauthorized', error, 400)
+        res.status(400).json(response)
         return
     }
 }

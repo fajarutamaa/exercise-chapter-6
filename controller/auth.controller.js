@@ -9,19 +9,19 @@ require('dotenv').config()
 
 async function Register(req, res, next) {
 
-    const { name, email, password } = req.body
+    const { Nama, email, password } = req.body
 
     const hashPass = await HashPassword(password)
 
     const payload = {
-        name: name,
+        name: Nama,
         email: email,
         password: hashPass
     }
 
     try {
 
-        const checkUser = await prisma.user.findUnique({
+        const checkUser = await prisma.users.findUnique({
             where: {
                 email,
             }
@@ -33,7 +33,7 @@ async function Register(req, res, next) {
             return
         }
 
-        await prisma.user.create({
+        await prisma.users.create({
             data: {
                 payload,
             },

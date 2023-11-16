@@ -12,11 +12,12 @@ datasource db {
 
 model Users {
   id              Int       @id @default(autoincrement())
-  Nama            String
+  name            String
   password        String
   profile_picture String?
   email           String    @unique
   address         String
+  type            String
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   deletedAt       DateTime?
